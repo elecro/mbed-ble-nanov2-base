@@ -12,8 +12,10 @@ device development using [ARM mbed OS 5.4](https://github.com/ARMmbed/mbed-os) p
 - Install the mbed CLI by `pip install mbed-cli`.
 - Download and install the
   [GNU Embedded Toolchain for ARM](https://developer.arm.com/open-source/gnu-toolchain/gnu-rm/downloads).
+- The `mbed` and `arm-none-eabi-g++` should be available in bash.
+  For this please set the `$PATH` environment variable.
 
-For Ubuntu quick tool install see (ubuntu_deps.sh)
+For Ubuntu quick tool install see (ubuntu_deps.sh).
 
 ### Building project
 
@@ -25,4 +27,8 @@ $ mbed compile
 ```
 
 After compile there should be a `./BUILD/RBLAB_BLENANO2/GCC_ARM/mbed-ble-nanov2.hex` file
-which can be copied to the target device via DAPLink.
+which can be copied to the target device via DAPLink (on ubuntu: `/media/$USER/DAPLINK.
+For example:
+```
+$ cp ./BUILD/RBLAB_BLENANO2/GCC_ARM/mbed-ble-nanov2-base.hex /media/student/DAPLINK/
+```
