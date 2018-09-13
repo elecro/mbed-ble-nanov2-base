@@ -6,7 +6,7 @@ mkdir ~/toolchain/
 tar -xf /tmp/gcc-arm.tar.bz2 -C ~/toolchain/
 
 echo ""
-echo "Add $HOME/.local/bin/ to the $PATH env permanently (mbed-cli)"
-echo "Add $HOME/toolchain/gcc-arm-none-eabi-6-2017-q2-update/ to the $PATH env permanently (toolchain)"
-echo "example:"
-echo 'export PATH=$HOME/toolchain/gcc-arm-none-eabi-6-2017-q2-update/:$HOME/.local/bin/:$PATH'
+echo 'Add $HOME/.local/bin/ to the $PATH env permanently (mbed-cli)'
+echo 'Add $HOME/toolchain/gcc-arm-none-eabi-6-2017-q2-update/bin to the $PATH env permanently (toolchain)'
+echo 'example:'
+echo 'export PATH=$HOME/toolchain/gcc-arm-none-eabi-6-2017-q2-update/bin:$HOME/.local/bin/:$PATH'
