@@ -9,6 +9,8 @@
 
 #include <mbed.h>
 
+#include "service_counter.hpp"
+
 void blue_AdvertisementCallback(const Gap::AdvertisementCallbackParams_t* params)
 {
     /* Address is in little endian, thus the reverse order. */
@@ -120,6 +122,7 @@ void blue_DisconnectedCallback(const Gap::DisconnectionCallbackParams_t *params)
 {
     printf("Disconnected\r\n");
     /* After disconnection the advertisement and scanning could be restarted. */
+    BLE::Instance().gap().startAdvertising();
 }
 
 void blue_AddConnectionCallbacks(BLE& ble)
@@ -127,4 +130,45 @@ void blue_AddConnectionCallbacks(BLE& ble)
     Gap& gap = ble.gap();
     gap.onConnection(blue_ConnectedCallback);
     gap.onDisconnection(blue_DisconnectedCallback);
+}
+
+
+
+
+static ServiceCounter* service_counter;
+
+void blue_CounterService(BLE& ble, EventQueue& queue)
+{
+    Gap& gap = ble.gap();
+
+    /* Create the service(s) */
+    service_counter = new ServiceCounter(ble);
+    service_counter->startCounter(queue, 600);
+
+    /* Configure the advertisement payload data (max 31(?) bytes) */
+
+    /* Add the 16 bit service UUID entries into the advertisment data. */
+    const uint16_t service_uuid16_list[] = {
+        ServiceCounter::SERVICE_UUID,
+    };
+    gap.accumulateAdvertisingPayload(GapAdvertisingData::COMPLETE_LIST_16BIT_SERVICE_IDS,
+                                     (uint8_t*)service_uuid16_list,
+                                     sizeof(service_uuid16_list)
+    );
+    /* Add the device name for the advertisment data. */
+    const char kCounterDeviceName[] = "COUNTERD";
+    gap.accumulateAdvertisingPayload(GapAdvertisingData::COMPLETE_LOCAL_NAME,
+                                     (uint8_t*)kCounterDeviceName,
+                                     sizeof(kCounterDeviceName)
+    );
+
+    /* Specify flags in the payload. */
+    gap.accumulateAdvertisingPayload(GapAdvertisingData::BREDR_NOT_SUPPORTED | GapAdvertisingData::LE_GENERAL_DISCOVERABLE);
+
+    /* Configure the advertisment. */
+    gap.setAdvertisingType(GapAdvertisingParams::ADV_CONNECTABLE_UNDIRECTED);
+    gap.setAdvertisingInterval(1000);
+
+    gap.startAdvertising();
+    printf("Started advertising\r\n");
 }

@@ -66,6 +66,9 @@ static void blue_InitDone(BLE::InitializationCompleteCallbackContext* params)
 #ifdef BLE_CONN
     blue_AddConnectionCallbacks(ble);
 #endif
+#ifdef BLE_SRV_COUNT
+    blue_CounterService(ble, queue);
+#endif
 }
 
 /* All events from the BLE should be queue on our own event queue. */

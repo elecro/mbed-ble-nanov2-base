@@ -12,6 +12,6 @@ Available build defines:
 
 * `BLE_CONN`: Enables the connect/disconnect callbacks.
 * `BLE_SCAN`: Enables the periodic advertisment scan example.
-
+* `BLE_SRV_COUNT`: Enables a BLE counter service.
 
 Please note that it is possible that not all combinations are valid!
