@@ -8,6 +8,8 @@
 #include <mbed.h>
 #include <ble/BLE.h>
 
+#include "blue.hpp"
+
 DigitalOut led1(LED1, 1);
 Serial usb(USBTX, USBRX);
 
@@ -37,7 +39,6 @@ static void blue_PrintMacAddress(void)
     usb.printf("%02x\r\n", address[0]);
 }
 
-
 static void blue_InitDone(BLE::InitializationCompleteCallbackContext* params)
 {
     BLE& ble = params->ble;
@@ -58,6 +59,8 @@ static void blue_InitDone(BLE::InitializationCompleteCallbackContext* params)
     }
 
     blue_PrintMacAddress();
+
+    blue_StartScan(ble);
 }
 
 /* All events from the BLE should be queue on our own event queue. */
