@@ -9,4 +9,5 @@
 
 void blue_AdvertisementCallback(const Gap::AdvertisementCallbackParams_t* params);
 void blue_StartScan(BLE& ble);
+void blue_AddConnectionCallbacks(BLE& ble);
 

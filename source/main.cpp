@@ -60,7 +60,12 @@ static void blue_InitDone(BLE::InitializationCompleteCallbackContext* params)
 
     blue_PrintMacAddress();
 
+#ifdef BLE_SCAN
     blue_StartScan(ble);
+#endif
+#ifdef BLE_CONN
+    blue_AddConnectionCallbacks(ble);
+#endif
 }
 
 /* All events from the BLE should be queue on our own event queue. */
